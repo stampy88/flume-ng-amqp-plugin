@@ -19,23 +19,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.stampy88.flume-ng</groupId>
-    <artifactId>amq-plugin</artifactId>
+    <artifactId>amqp-plugin</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>flume-ng-amq-plugin</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <flume.version>1.4.0-cdh4.4.1</flume.version>
-        <rabbitmq.version>3.1.4</rabbitmq.version>
-        <junit.version>4.10</junit.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <flume.version>1.4.0</flume.version>
+        <rabbitmq.version>3.2.3</rabbitmq.version>
+        <junit.version>4.10</junit.version>
         <slf4j-api.version>1.7.2</slf4j-api.version>
         <mockito-all.version>1.9.5</mockito-all.version>
-        <hadoop-client.version>2.0.0-mr1-cdh4.5.0</hadoop-client.version>
-        <unu-common.version>2.4.9-c</unu-common.version>
-        <protobuf-java.version>2.4.1</protobuf-java.version>
         <joda-time.version>2.3</joda-time.version>
         <hamcrest-all.version>1.3</hamcrest-all.version>
     </properties>
@@ -46,29 +42,11 @@
         <developerConnection>scm:git:git@github.com:stampy88/flume-ng-amqp-plugin.git</developerConnection>
     </scm>
 
-    <repositories>
-        <repository>
-            <id>cloudera</id>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-        </repository>
-    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.apache.flume</groupId>
             <artifactId>flume-ng-core</artifactId>
             <version>${flume.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.flume.flume-ng-sinks</groupId>
-            <artifactId>flume-hdfs-sink</artifactId>
-            <version>${flume.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-client</artifactId>
-            <version>${hadoop-client.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -114,7 +92,6 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <finalName>amqp-source-${project.version}</finalName>
                     <descriptors>
                         <descriptor>src/main/assembly/dist.xml</descriptor>
                     </descriptors>
