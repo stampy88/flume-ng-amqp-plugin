@@ -27,7 +27,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -99,6 +98,7 @@ public class EventDeliveryListenerTest extends BaseAmqpTest {
 
         Event event = listener.createEventFrom(delivery);
         assertThat(event.getBody(), is(BODY));
+        assertThat(event.getHeaders(), hasEntry(Constants.Event.ROUTING_KEY, ROUTING_KEY));
         assertThat(event.getHeaders(), hasEntry(Constants.Event.TIMESTAMP, String.valueOf(MESSAGE_DATE.getTime())));
         assertThat(event.getHeaders(), hasEntry(Constants.Event.APP_ID, APP_ID));
         assertThat(event.getHeaders(), hasEntry(Constants.Event.CONTENT_TYPE, CONTENT_TYPE));
@@ -203,6 +203,15 @@ public class EventDeliveryListenerTest extends BaseAmqpTest {
         Event event = listener.createEventFrom(delivery);
         assertThat(event.getHeaders(), not(hasKey(KEY_1)));
         assertThat(event.getHeaders(), not(hasKey(KEY_2)));
+    }
+
+    @Test
+    public void testCreateEventFrom_NullRoutingKey() throws Exception {
+        QueueingConsumer.Delivery delivery = createDelivery();
+        when(delivery.getEnvelope().getRoutingKey()).thenReturn(null);
+
+        Event event = listener.createEventFrom(delivery);
+        assertThat(event.getHeaders(), hasEntry(Constants.Event.ROUTING_KEY, ""));
     }
 
     static List listOfSize(int size) {

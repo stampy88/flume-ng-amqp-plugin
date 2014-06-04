@@ -9,8 +9,9 @@ Usage
 The AMQP Event Source will take messages from an AMQP broker and create Flume events from the message. The body of the
 event will contain the bytes from the message. All [properties](http://www.rabbitmq.com/releases/rabbitmq-java-client/v3.2.3/rabbitmq-java-client-javadoc-3.2.3/com/rabbitmq/client/BasicProperties.html)
 of the message, including headers, will be transferred as headers in the flume event. A timestamp header will be added to
-the event based either on the message's timestamp, or the system time depending on the configuration. In addition a sourceId
-header will be added to the event that will contain an integer representing which instance of the source this is within an agent.
+the event based either on the message's timestamp, or the system time depending on the configuration. The routing key from
+the AMQP message will be added as a routingKey header to the event. In addition a sourceId header will be added
+to the event that will contain an integer representing which instance of the source this is within an agent.
 
 This source supports batching of events before sending into a channel.
 

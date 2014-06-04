@@ -102,5 +102,6 @@ public class Constants {
         public static final String USER_ID = "userId";
         public static final String TIMESTAMP = "timestamp";
         public static final String SOURCE_ID = "sourceId";
+        public static final String ROUTING_KEY = "routingKey";
     }
 }

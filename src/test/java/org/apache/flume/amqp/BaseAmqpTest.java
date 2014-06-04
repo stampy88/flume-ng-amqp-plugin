@@ -59,6 +59,7 @@ public abstract class BaseAmqpTest {
     protected static final long DELIVERY_TAG = 99L;
     protected static final int PREFETCH_SIZE = 50;
     protected static final int BATCH_SIZE = 25;
+    protected static final String ROUTING_KEY = "routing-key";
 
     protected QueueingConsumer.Delivery createDelivery() {
         return createDeliveryWithTag(DELIVERY_TAG);
@@ -87,6 +88,7 @@ public abstract class BaseAmqpTest {
         when(delivery.getProperties()).thenReturn(properties);
         Envelope envelope = mock(Envelope.class);
         when(envelope.getDeliveryTag()).thenReturn(deliveryTag);
+        when(envelope.getRoutingKey()).thenReturn(ROUTING_KEY);
         when(delivery.getEnvelope()).thenReturn(envelope);
 
         return delivery;

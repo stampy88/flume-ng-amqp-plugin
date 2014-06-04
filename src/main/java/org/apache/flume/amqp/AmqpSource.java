@@ -17,6 +17,7 @@
 package org.apache.flume.amqp;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.QueueingConsumer;
@@ -270,6 +271,9 @@ public class AmqpSource extends AbstractEventDrivenSource {
 
             eventHeaders.put(Constants.Event.TIMESTAMP, String.valueOf(timeInMS));
             eventHeaders.put(Constants.Event.SOURCE_ID, sourceId);
+            // envelope is always there, don't need a null check
+            String routingKey = delivery.getEnvelope().getRoutingKey();
+            eventHeaders.put(Constants.Event.ROUTING_KEY, Strings.nullToEmpty(routingKey));
 
             return EventBuilder.withBody(delivery.getBody(), eventHeaders);
         }
