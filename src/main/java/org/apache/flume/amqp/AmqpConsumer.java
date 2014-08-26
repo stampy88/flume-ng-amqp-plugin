@@ -257,12 +257,16 @@ class AmqpConsumer implements Runnable {
     @VisibleForTesting
     protected String declarationsForChannel(Channel channel) throws IOException {
         // setup exchange, queue and binding
-        channel.exchangeDeclare(exchangeName, exchangeType, durableExchange);
-
         if (prefetchSize > 0) {
             channel.basicQos(prefetchSize);
         }
-
+        
+        // if only queue name is provided
+        if (exchangeName == null){
+            return queueName;
+        }else{
+            channel.exchangeDeclare(exchangeName, exchangeType, durableExchange);
+        }
         // named queue or server generated
         if (queueName == null) {
             queueName = channel.queueDeclare().getQueue();
@@ -489,7 +493,7 @@ class AmqpConsumer implements Runnable {
         }
 
         public AmqpConsumer build() {
-            checkArgument(exchangeName != null, "exchangeName cannot be null");
+            checkArgument(exchangeName != null || queueName != null, "exchangeName or queueName cannot be null");
             checkArgument(batchDeliveryListener != null, "batchDeliveryListener cannot be null");
             checkArgument(connectionFactory != null, "connectionFactory cannot be null");
             return new AmqpConsumer(this);

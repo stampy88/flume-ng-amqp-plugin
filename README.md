@@ -7,7 +7,7 @@ Usage
 -----
 
 The AMQP Event Source will take messages from an AMQP broker and create Flume events from the message. The body of the
-event will contain the bytes from the message. All [properties](http://www.rabbitmq.com/releases/rabbitmq-java-client/v3.2.3/rabbitmq-java-client-javadoc-3.2.3/com/rabbitmq/client/BasicProperties.html)
+event will contain the bytes from the message. All [properties](http://www.rabbitmq.com/releases/rabbitmq-java-client/v3.3.5/rabbitmq-java-client-javadoc-3.3.5/com/rabbitmq/client/BasicProperties.html)
 of the message, including headers, will be transferred as headers in the flume event. A timestamp header will be added to
 the event based either on the message's timestamp, or the system time depending on the configuration. The routing key from
 the AMQP message will be added as a routingKey header to the event. In addition a sourceId header will be added
@@ -17,7 +17,10 @@ This source supports batching of events before sending into a channel.
 
 The only required configuration parameter is the exchangeName parameter. All others will be defaulted.
 
-* `exchangeName` - **required** - this is the name of the AMQP exchange we are getting messages from.
+* `exchangeName` - **required if queueName is not specified** - this is the name of the AMQP exchange we are getting messages from.
+* `queueName` - **required if exchangeName is not specified** if left unspecified, the server chooses a name and provides this to the client. Generally, when applications
+share a message queue they agree on a message queue name beforehand, and when an application needs a message queue
+for its own purposes, it lets the server provide a name.
 * `host` - the host name or IP address of the broker. Defaults to **localhost** when not specified.
 * `port` - the port on which the broker is accepting connections. Defaults to **5672** when not specified.
 * `virtualHost` - the virtual host to use when connecting to the broker. Default to **"/"** when not specified.
@@ -27,9 +30,6 @@ The only required configuration parameter is the exchangeName parameter. All oth
 * `requestedHeartbeat` - the initially requested heartbeat interval, in seconds; zero for none. Defaults to **zero**.
 * `exchangeType` -  the type exchange. Valid types are direct, fanout, topic, and header. Defaults to **direct** when not specified.
 * `durableExchange` - true if we are declaring a durable exchange (the exchange will survive a server restart). Defaults to **false**.
-* `queueName` - if left unspecified, the server chooses a name and provides this to the client. Generally, when applications
-share a message queue they agree on a message queue name beforehand, and when an application needs a message queue
-for its own purposes, it lets the server provide a name.
 * `durableQueue` - if true, the message queue remains present and active when the server restarts. It may lose transient
 messages if the server restarts. Defaults to **false**.
 * `exclusiveQueue` - if true, the queue belongs to the current connection only, and is deleted when the connection closes.
@@ -70,6 +70,14 @@ Examples
     agent1.sources.amqpSource.host =  10.23.224.25
     agent1.sources.amqpSource.exchangeName = stockTrades
     agent1.sources.amqpSource.bindings  = GOOG APPL TSLA
+    agent1.sources.amqpSource.queueName  = stockQueue
+    ```
+
+3. Also works if only queue name is specified
+
+    ```
+    agent1.sources.amqpSource.type = org.apache.flume.amqp.AmqpSource
+    agent1.sources.amqpSource.host =  10.23.224.25
     agent1.sources.amqpSource.queueName  = stockQueue
     ```
 
