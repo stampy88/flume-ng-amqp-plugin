@@ -28,7 +28,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <flume.version>1.4.0</flume.version>
-        <rabbitmq.version>3.2.3</rabbitmq.version>
+        <rabbitmq.version>3.3.5</rabbitmq.version>
         <junit.version>4.10</junit.version>
         <slf4j-api.version>1.7.2</slf4j-api.version>
         <mockito-all.version>1.9.5</mockito-all.version>
