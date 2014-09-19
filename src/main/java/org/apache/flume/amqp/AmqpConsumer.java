@@ -261,28 +261,26 @@ class AmqpConsumer implements Runnable {
             channel.basicQos(prefetchSize);
         }
         
-        // if only queue name is provided
-        if (exchangeName == null){
-            return queueName;
-        }else{
+        // if exchange is provided
+        if (exchangeName != null){
             channel.exchangeDeclare(exchangeName, exchangeType, durableExchange);
-        }
-        // named queue or server generated
-        if (queueName == null) {
-            queueName = channel.queueDeclare().getQueue();
-
-        } else {
-            channel.queueDeclare(queueName, durableQueue, exclusiveQueue, autoDeleteQueue, null);
-        }
-
-        if (bindings.length > 0) {
-            // multiple bindings
-            for (String binding : bindings) {
-                channel.queueBind(queueName, exchangeName, binding);
+        
+            // named queue or server generated
+            if (queueName == null) {
+                queueName = channel.queueDeclare().getQueue();
+            } else {
+                channel.queueDeclare(queueName, durableQueue, exclusiveQueue, autoDeleteQueue, null);
             }
-        } else {
-            // no binding given - this could be the case if it is a fanout exchange
-            channel.queueBind(queueName, exchangeName, Constants.AMQP.SERVER_GENERATED_QUEUE_NAME);
+
+            if (bindings.length > 0) {
+                // multiple bindings
+                for (String binding : bindings) {
+                    channel.queueBind(queueName, exchangeName, binding);
+                }
+            } else {
+                // no binding given - this could be the case if it is a fanout exchange
+                channel.queueBind(queueName, exchangeName, Constants.AMQP.SERVER_GENERATED_QUEUE_NAME);
+            }
         }
 
         return queueName;
@@ -493,7 +491,7 @@ class AmqpConsumer implements Runnable {
         }
 
         public AmqpConsumer build() {
-            checkArgument(exchangeName != null || queueName != null, "exchangeName or queueName cannot be null");
+            checkArgument(exchangeName != null || queueName != null, "exchangeName and queueName cannot both be null");
             checkArgument(batchDeliveryListener != null, "batchDeliveryListener cannot be null");
             checkArgument(connectionFactory != null, "connectionFactory cannot be null");
             return new AmqpConsumer(this);

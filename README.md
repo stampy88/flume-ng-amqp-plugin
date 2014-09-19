@@ -15,7 +15,7 @@ to the event that will contain an integer representing which instance of the sou
 
 This source supports batching of events before sending into a channel.
 
-The only required configuration parameter is the exchangeName parameter. All others will be defaulted.
+The only required configuration parameter is either the exchangeName or the queueName parameter. All others will be defaulted.
 
 * `exchangeName` - **required if queueName is not specified** - this is the name of the AMQP exchange we are getting messages from.
 * `queueName` - **required if exchangeName is not specified** if left unspecified, the server chooses a name and provides this to the client. Generally, when applications
@@ -73,7 +73,7 @@ Examples
     agent1.sources.amqpSource.queueName  = stockQueue
     ```
 
-3. Also works if only queue name is specified
+3. Also works if only queue name is specified (all queues are bound by default to the amq.direct exchange with the queue name)
 
     ```
     agent1.sources.amqpSource.type = org.apache.flume.amqp.AmqpSource

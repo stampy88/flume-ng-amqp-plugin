@@ -152,7 +152,7 @@ public class AmqpConsumerTest extends BaseAmqpTest {
             }
         }
     }
-
+    
     @Test
     public void testDeclarationsForChannel_WithQueueNameAndBindings() throws Exception {
         AmqpConsumer consumer = builder.build();
@@ -239,7 +239,12 @@ public class AmqpConsumerTest extends BaseAmqpTest {
         assertThat(builder.getBindings(), is(bindings));
         assertTrue(builder.getBindings() != bindings);
     }
-
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testBuilder_WithNoQueueNameAndNoExchange() throws Exception {
+        builder.setQueueName(null).setExchangeName(null).build();
+    }
+    
     private Thread threadInterruptedAfter(int timesInvoked) {
         Thread thread = mock(Thread.class);
 

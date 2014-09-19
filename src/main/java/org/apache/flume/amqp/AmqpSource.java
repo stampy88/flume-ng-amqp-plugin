@@ -112,11 +112,10 @@ public class AmqpSource extends AbstractEventDrivenSource {
     @VisibleForTesting
     static AmqpConsumer.Builder createConsumerBuilderFrom(Context context) {
         // either exchange name or queue name is required
-        if (context.getString(AmqpSourceConfigurationConstants.EXCHANGE_NAME) == null && 
-            context.getString(AmqpSourceConfigurationConstants.QUEUE_NAME) == null){
-            
-            throw new IllegalArgumentException("Either "+AmqpSourceConfigurationConstants.EXCHANGE_NAME
-                    +" or " + AmqpSourceConfigurationConstants.QUEUE_NAME + " must exist and may not be null");
+        if (context.getString(AmqpSourceConfigurationConstants.EXCHANGE_NAME) == null
+                && context.getString(AmqpSourceConfigurationConstants.QUEUE_NAME) == null) {
+            throw new IllegalArgumentException(AmqpSourceConfigurationConstants.EXCHANGE_NAME
+                    + " and " + AmqpSourceConfigurationConstants.QUEUE_NAME + " cannot both be null");
         }
         
         AmqpConsumer.Builder builder = AmqpConsumer.newBuilder()
