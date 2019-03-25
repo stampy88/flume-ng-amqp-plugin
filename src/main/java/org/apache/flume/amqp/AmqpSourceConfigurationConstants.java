@@ -128,6 +128,12 @@ class AmqpSourceConfigurationConstants {
     public static final String REQUEST_HEARTBEAT = "requestedHeartbeat";
 
     /**
+     * The default AMQP 0-9-1 connection handshake timeout for TCP (socket) connection timeout. Defaults to
+     * {@link com.rabbitmq.client.ConnectionFactory#DEFAULT_HANDSHAKE_TIMEOUT}
+     */
+    public static final String HANDSHAKE_TIMEOUT = "handshakeTimeout";
+
+    /**
      * This property has dual purposes. If the source is not in auto-ack mode, then this will be the number of messages
      * to buffer before sending an ack to the server.
      * <p/>

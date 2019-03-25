@@ -150,6 +150,7 @@ public class AmqpSource extends AbstractEventDrivenSource {
         String password = context.getString(AmqpSourceConfigurationConstants.PASSWORD, Constants.Defaults.PASSWORD);
         int connectionTimeout = context.getInteger(AmqpSourceConfigurationConstants.CONNECTION_TIMEOUT, Constants.Defaults.CONNECTION_TIMEOUT);
         int requestHeartbeat = context.getInteger(AmqpSourceConfigurationConstants.REQUEST_HEARTBEAT, Constants.Defaults.REQUESTED_HEARTBEAT);
+        int handshakeTimeout = context.getInteger(AmqpSourceConfigurationConstants.HANDSHAKE_TIMEOUT, Constants.Defaults.HANDSHAKE_TIMEOUT);
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost(host);
@@ -159,6 +160,7 @@ public class AmqpSource extends AbstractEventDrivenSource {
         connectionFactory.setPassword(password);
         connectionFactory.setConnectionTimeout(connectionTimeout);
         connectionFactory.setRequestedHeartbeat(requestHeartbeat);
+        connectionFactory.setHandshakeTimeout(handshakeTimeout);
 
         return connectionFactory;
     }
