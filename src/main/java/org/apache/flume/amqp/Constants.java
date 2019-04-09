@@ -54,6 +54,7 @@ public class Constants {
         public static final String PASSWORD = ConnectionFactory.DEFAULT_PASS;
         public static final int CONNECTION_TIMEOUT = ConnectionFactory.DEFAULT_CONNECTION_TIMEOUT;
         public static final int REQUESTED_HEARTBEAT = ConnectionFactory.DEFAULT_HEARTBEAT;
+        public static final int HANDSHAKE_TIMEOUT = ConnectionFactory.DEFAULT_HANDSHAKE_TIMEOUT;
 
     }
 

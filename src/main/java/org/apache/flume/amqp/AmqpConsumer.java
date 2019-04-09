@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -286,7 +287,7 @@ class AmqpConsumer implements Runnable {
         return queueName;
     }
 
-    private Connection createConnection() throws IOException {
+    private Connection createConnection() throws IOException, TimeoutException {
         LOG.info("Connecting to {} ...", connectionFactory.getHost());
         Connection conn = connectionFactory.newConnection();
         LOG.info("Connected to {}", connectionFactory.getHost());
